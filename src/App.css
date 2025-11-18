@@ -14,22 +14,16 @@
 
 /* Prevent mobile zoom and improve touch */
 html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh; /* Dynamic viewport height for mobile Safari */
-  overflow: hidden;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   touch-action: manipulation;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -38,19 +32,13 @@ body {
 .app-container {
   width: 100vw;
   height: 100vh;
-  height: 100dvh; /* Dynamic viewport height for mobile Safari */
+  min-height: -webkit-fill-available; /* Safari mobile friendly */
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #000000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
   overflow: hidden;
-  padding: 0;
-  margin: 0;
 }
 
 /* Framer Grain overlay wrapper */
@@ -72,7 +60,6 @@ body {
   height: 830px;
   max-width: 95vw;
   max-height: 95vh;
-  max-height: 95dvh; /* Dynamic viewport height for mobile Safari */
   font-size: 1.2px;
   z-index: 10;
   transition: filter 0.15s ease-out;
@@ -770,8 +757,7 @@ a.dock-app {
     width: 369px;
     height: 747px;
     max-width: 95vw;
-    max-height: 95vh;
-    max-height: 95dvh; /* Dynamic viewport height for mobile Safari */
+    max-height: 92vh;
     font-size: 1.08px;
   }
 }
@@ -781,8 +767,7 @@ a.dock-app {
     width: 328px;
     height: 664px;
     max-width: 95vw;
-    max-height: 95vh;
-    max-height: 95dvh; /* Dynamic viewport height for mobile Safari */
+    max-height: 90vh;
     font-size: 0.96px;
   }
 }
@@ -794,7 +779,6 @@ a.dock-app {
     height: auto;
     aspect-ratio: 410 / 830;
     max-height: 85vh;
-    max-height: 85dvh; /* Dynamic viewport height for mobile Safari */
     font-size: clamp(0.8px, 0.2vw, 1.2px);
   }
   
@@ -829,7 +813,6 @@ a.dock-app {
     height: auto;
     aspect-ratio: 410 / 830;
     max-height: 80vh;
-    max-height: 80dvh; /* Dynamic viewport height for mobile Safari */
     font-size: clamp(0.7px, 0.18vw, 1px);
   }
   
@@ -878,7 +861,6 @@ a.dock-app {
     height: auto;
     aspect-ratio: 410 / 830;
     max-height: 75vh;
-    max-height: 75dvh; /* Dynamic viewport height for mobile Safari */
     font-size: 0.6px;
   }
   
@@ -929,7 +911,6 @@ a.dock-app {
   .iphone-frame {
     width: auto;
     height: 85vh;
-    height: 85dvh; /* Dynamic viewport height for mobile Safari */
     max-width: 45vw;
     aspect-ratio: 410 / 830;
   }
@@ -942,7 +923,6 @@ a.dock-app {
     height: 830px;
     max-width: 25vw;
     max-height: 90vh;
-    max-height: 90dvh; /* Dynamic viewport height for mobile Safari */
   }
 }
 
@@ -953,7 +933,6 @@ a.dock-app {
     height: 1012px;
     max-width: 20vw;
     max-height: 85vh;
-    max-height: 85dvh; /* Dynamic viewport height for mobile Safari */
     font-size: 1.46px;
   }
 }
