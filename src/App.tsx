@@ -1222,13 +1222,16 @@ function App() {
                     <span className="count">{formatCount(video.bookmarks)}</span>
                   </div>
                   <div className="action-button" onClick={() => toggleVolume(video.id)}>
-                    <svg className="action-icon" viewBox="0 0 48 48" fill="white">
-                      {mutedVideos.has(video.id) ? (
-                        // Muted speaker icon
-                        <path d="M28 4L22 4 16 10 14 10 14 38 16 38 22 44 28 44zM20 14L24 14 24 36 20 36z"/>
-                      ) : (
-                        // Unmuted speaker icon with sound waves
-                        <path d="M28 4L22 4 16 10 14 10 14 38 16 38 22 44 28 44zM20 14L24 14 24 36 20 36zM32 16c0-2.2 1.8-4 4-4s4 1.8 4 4v16c0 2.2-1.8 4-4 4s-4-1.8-4-4V16zM36 14c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2s2-.9 2-2V16c0-1.1-.9-2-2-2z"/>
+                    <svg className="action-icon" viewBox="0 0 48 48" fill="none" stroke="white" strokeWidth="2">
+                      {/* Speaker body */}
+                      <path d="M16 18v12l8 6V12l-8 6z"/>
+                      {/* Volume bars */}
+                      <path d="M26 16v16"/>
+                      <path d="M30 12v24"/>
+                      <path d="M34 8v32"/>
+                      {/* Mute slash */}
+                      {mutedVideos.has(video.id) && (
+                        <path d="M10 38l28-28" stroke="white" strokeWidth="3"/>
                       )}
                     </svg>
                   </div>
