@@ -1121,9 +1121,9 @@ function App() {
         const messagesList = Object.entries(data).map(([id, msg]: [string, any]) => ({
           id,
           text: msg.text,
-          username: msg.username,
+          username: msg.username || 'Anonymous',
           timestamp: new Date(msg.timestamp),
-          isUser: msg.username === currentUser,
+          isUser: msg.username && currentUser && msg.username === currentUser,
           imageUrl: msg.imageUrl
         }))
         console.log('Messages list:', messagesList)
@@ -1442,7 +1442,7 @@ function App() {
               <div className="messages-list">
                 {messages.map((msg) => (
                   <div key={msg.id} className={`message-wrapper ${msg.isUser ? 'user' : 'other'}`}>
-                    <div className="message-sender">{msg.username}</div>
+                    {!msg.isUser && <div className="message-sender">{msg.username}</div>}
                     <div className={`message-bubble ${msg.isUser ? 'user' : 'other'}`}>
                       {msg.imageUrl && (
                         <img 
