@@ -692,17 +692,13 @@ a.dock-app {
 .app-icon-img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover;
+  object-fit: contain;
   display: block !important;
   position: relative;
   pointer-events: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
-  max-width: none !important;
-  max-height: none !important;
-  min-width: 60px;
-  min-height: 60px;
 }
 
 
@@ -775,10 +771,6 @@ a.dock-app {
     height: 55px;
     border-radius: 14px;
   }
-  
-  .app-icon-img {
-    object-fit: contain;
-  }
 }
 
 @media (max-width: 480px) {
@@ -810,10 +802,6 @@ a.dock-app {
     height: 50px;
     border-radius: 13px;
   }
-  
-  .app-icon-img {
-    object-fit: contain;
-  }
 }
 
 /* Extra small devices */
@@ -841,10 +829,6 @@ a.dock-app {
     width: 45px;
     height: 45px;
     border-radius: 12px;
-  }
-  
-  .app-icon-img {
-    object-fit: contain;
   }
 }
 
