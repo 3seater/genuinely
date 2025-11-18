@@ -1354,14 +1354,18 @@ function App() {
 
           {/* Scrollable Video Feed */}
           <div className="video-feed" ref={scrollContainerRef}>
-            {circularVideos.map((video, index) => (
+            {circularVideos.map((video, index) => {
+              // Only preload current video and adjacent videos (prev/next)
+              const isCurrentOrAdjacent = Math.abs(index - currentVideoIndex) <= 1;
+              
+              return (
               <div key={`${video.id}-${index}`} className="video-container">
                 <video 
                   className={`video-player ${pausedVideos.has(video.id) ? 'paused' : ''}`}
                   src={video.videoUrl}
                   loop
                   playsInline
-                  preload="auto"
+                  preload={isCurrentOrAdjacent ? "auto" : "none"}
                   crossOrigin="anonymous"
                   onClick={(e) => toggleVideoPlayPause(e, video.id)}
                 />
@@ -1436,7 +1440,8 @@ function App() {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Bottom Dock - Hidden when comments open */}

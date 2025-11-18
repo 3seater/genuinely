@@ -27,6 +27,8 @@ body {
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  touch-action: none; /* Disable all touch scrolling on mobile */
+  overscroll-behavior: none; /* Prevent pull-to-refresh */
 }
 
 .app-container {
@@ -39,6 +41,8 @@ body {
   background-color: #000000;
   position: relative;
   overflow: hidden;
+  touch-action: none; /* Disable all touch scrolling */
+  overscroll-behavior: none; /* Prevent bounce/pull-to-refresh */
 }
 
 /* Framer Grain overlay wrapper */
@@ -774,11 +778,16 @@ a.dock-app {
 
 /* Mobile optimizations */
 @media (max-width: 768px) {
+  /* Hide grain on mobile for performance */
+  .grain-wrapper {
+    display: none !important;
+  }
+
   .iphone-frame {
     width: min(410px, 85vw);
     height: auto;
     aspect-ratio: 410 / 830;
-    max-height: 85vh;
+    max-height: 65vh; /* 25% smaller for mobile */
     font-size: clamp(0.8px, 0.2vw, 1.2px);
   }
   
@@ -808,11 +817,16 @@ a.dock-app {
 }
 
 @media (max-width: 480px) {
+  /* Hide grain on mobile for performance */
+  .grain-wrapper {
+    display: none !important;
+  }
+
   .iphone-frame {
     width: 90vw;
     height: auto;
     aspect-ratio: 410 / 830;
-    max-height: 80vh;
+    max-height: 60vh; /* 25% smaller for mobile */
     font-size: clamp(0.7px, 0.18vw, 1px);
   }
   
@@ -856,11 +870,16 @@ a.dock-app {
 
 /* Extra small devices */
 @media (max-width: 360px) {
+  /* Hide grain on mobile for performance */
+  .grain-wrapper {
+    display: none !important;
+  }
+
   .iphone-frame {
     width: 92vw;
     height: auto;
     aspect-ratio: 410 / 830;
-    max-height: 75vh;
+    max-height: 55vh; /* 25% smaller for mobile */
     font-size: 0.6px;
   }
   
