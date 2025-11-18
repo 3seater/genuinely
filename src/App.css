@@ -14,6 +14,12 @@
 
 /* Prevent mobile zoom and improve touch */
 html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile Safari */
+  overflow: hidden;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   touch-action: manipulation;
@@ -22,6 +28,8 @@ html {
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,8 +43,14 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #000000;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 /* Framer Grain overlay wrapper */
@@ -779,13 +793,9 @@ a.dock-app {
     width: min(410px, 85vw);
     height: auto;
     aspect-ratio: 410 / 830;
-    max-height: 90vh;
-    max-height: 90dvh; /* Dynamic viewport height for mobile Safari */
+    max-height: 85vh;
+    max-height: 85dvh; /* Dynamic viewport height for mobile Safari */
     font-size: clamp(0.8px, 0.2vw, 1.2px);
-  }
-  
-  .app-container {
-    padding: 20px 0;
   }
   
   .dock {
@@ -818,13 +828,9 @@ a.dock-app {
     width: 90vw;
     height: auto;
     aspect-ratio: 410 / 830;
-    max-height: 85vh;
-    max-height: 85dvh; /* Dynamic viewport height for mobile Safari */
+    max-height: 80vh;
+    max-height: 80dvh; /* Dynamic viewport height for mobile Safari */
     font-size: clamp(0.7px, 0.18vw, 1px);
-  }
-  
-  .app-container {
-    padding: 15px 0;
   }
   
   .dock {
@@ -871,8 +877,8 @@ a.dock-app {
     width: 92vw;
     height: auto;
     aspect-ratio: 410 / 830;
-    max-height: 80vh;
-    max-height: 80dvh; /* Dynamic viewport height for mobile Safari */
+    max-height: 75vh;
+    max-height: 75dvh; /* Dynamic viewport height for mobile Safari */
     font-size: 0.6px;
   }
   
@@ -926,10 +932,6 @@ a.dock-app {
     height: 85dvh; /* Dynamic viewport height for mobile Safari */
     max-width: 45vw;
     aspect-ratio: 410 / 830;
-  }
-  
-  .app-container {
-    padding: 10px;
   }
 }
 
