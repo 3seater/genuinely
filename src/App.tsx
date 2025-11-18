@@ -1222,16 +1222,20 @@ function App() {
                     <span className="count">{formatCount(video.bookmarks)}</span>
                   </div>
                   <div className="action-button" onClick={() => toggleVolume(video.id)}>
-                    <svg className="action-icon" viewBox="0 0 48 48" fill="none" stroke="white" strokeWidth="2">
-                      {/* Speaker body */}
-                      <path d="M16 18v12l8 6V12l-8 6z"/>
-                      {/* Volume bars */}
-                      <path d="M26 16v16"/>
-                      <path d="M30 12v24"/>
-                      <path d="M34 8v32"/>
+                    <svg className="action-icon" viewBox="0 0 48 48" fill="white">
+                      {/* Speaker cone */}
+                      <path d="M6 16h8l10-10v36L14 32H6V16z"/>
+                      {/* Sound waves */}
+                      {!mutedVideos.has(video.id) && (
+                        <>
+                          <path d="M28 18c2 2 2 10 0 12" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+                          <path d="M32 14c4 4 4 16 0 20" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+                          <path d="M36 10c6 6 6 22 0 28" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+                        </>
+                      )}
                       {/* Mute slash */}
                       {mutedVideos.has(video.id) && (
-                        <path d="M10 38l28-28" stroke="white" strokeWidth="3"/>
+                        <path d="M8 40L40 8" stroke="white" strokeWidth="3" strokeLinecap="round"/>
                       )}
                     </svg>
                   </div>
