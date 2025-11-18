@@ -30,6 +30,7 @@ body {
 .app-container {
   width: 100vw;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile Safari */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,6 +58,7 @@ body {
   height: 830px;
   max-width: 95vw;
   max-height: 95vh;
+  max-height: 95dvh; /* Dynamic viewport height for mobile Safari */
   font-size: 1.2px;
   z-index: 10;
   transition: filter 0.15s ease-out;
@@ -755,6 +757,7 @@ a.dock-app {
     height: 747px;
     max-width: 95vw;
     max-height: 95vh;
+    max-height: 95dvh; /* Dynamic viewport height for mobile Safari */
     font-size: 1.08px;
   }
 }
@@ -765,6 +768,7 @@ a.dock-app {
     height: 664px;
     max-width: 95vw;
     max-height: 95vh;
+    max-height: 95dvh; /* Dynamic viewport height for mobile Safari */
     font-size: 0.96px;
   }
 }
@@ -776,6 +780,7 @@ a.dock-app {
     height: auto;
     aspect-ratio: 410 / 830;
     max-height: 90vh;
+    max-height: 90dvh; /* Dynamic viewport height for mobile Safari */
     font-size: clamp(0.8px, 0.2vw, 1.2px);
   }
   
@@ -814,6 +819,7 @@ a.dock-app {
     height: auto;
     aspect-ratio: 410 / 830;
     max-height: 85vh;
+    max-height: 85dvh; /* Dynamic viewport height for mobile Safari */
     font-size: clamp(0.7px, 0.18vw, 1px);
   }
   
@@ -866,6 +872,7 @@ a.dock-app {
     height: auto;
     aspect-ratio: 410 / 830;
     max-height: 80vh;
+    max-height: 80dvh; /* Dynamic viewport height for mobile Safari */
     font-size: 0.6px;
   }
   
@@ -916,6 +923,7 @@ a.dock-app {
   .iphone-frame {
     width: auto;
     height: 85vh;
+    height: 85dvh; /* Dynamic viewport height for mobile Safari */
     max-width: 45vw;
     aspect-ratio: 410 / 830;
   }
@@ -932,6 +940,7 @@ a.dock-app {
     height: 830px;
     max-width: 25vw;
     max-height: 90vh;
+    max-height: 90dvh; /* Dynamic viewport height for mobile Safari */
   }
 }
 
@@ -942,6 +951,7 @@ a.dock-app {
     height: 1012px;
     max-width: 20vw;
     max-height: 85vh;
+    max-height: 85dvh; /* Dynamic viewport height for mobile Safari */
     font-size: 1.46px;
   }
 }
