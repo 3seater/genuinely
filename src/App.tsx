@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import './App.css'
-import { database } from './firebase'
+import { database, storage } from './firebase'
 import { ref, push, onValue, query, orderByChild, limitToLast, get, update } from 'firebase/database'
+import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
 import Grain from './components/Grain'
 
 // Import local videos
@@ -192,8 +193,9 @@ function App() {
   const [glowColor, setGlowColor] = useState('100, 150, 255')
   const screenRef = useRef<HTMLDivElement>(null)
   const [showMessages, setShowMessages] = useState(false)
-  const [messages, setMessages] = useState<Array<{ id: string; text: string; isUser: boolean; username: string; timestamp: Date }>>([])
+  const [messages, setMessages] = useState<Array<{ id: string; text: string; isUser: boolean; username: string; timestamp: Date; imageUrl?: string }>>([])
   const [messageInput, setMessageInput] = useState('')
+  const [uploadingImage, setUploadingImage] = useState(false)
   const [showUsernameSetup, setShowUsernameSetup] = useState(false)
   const [usernameInput, setUsernameInput] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -949,6 +951,123 @@ function App() {
     setUsernameInput('')
   }
 
+  // Compress image before upload
+  const compressImage = (file: File, maxWidth: number = 800, quality: number = 0.7): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = (event) => {
+        const img = new Image()
+        img.src = event.target?.result as string
+        img.onload = () => {
+          const canvas = document.createElement('canvas')
+          let width = img.width
+          let height = img.height
+
+          // Calculate new dimensions
+          if (width > height) {
+            if (width > maxWidth) {
+              height = (height * maxWidth) / width
+              width = maxWidth
+            }
+          } else {
+            if (height > maxWidth) {
+              width = (width * maxWidth) / height
+              height = maxWidth
+            }
+          }
+
+          canvas.width = width
+          canvas.height = height
+
+          const ctx = canvas.getContext('2d')
+          ctx?.drawImage(img, 0, 0, width, height)
+
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                resolve(blob)
+              } else {
+                reject(new Error('Canvas toBlob failed'))
+              }
+            },
+            'image/jpeg',
+            quality
+          )
+        }
+        img.onerror = reject
+      }
+      reader.onerror = reject
+    })
+  }
+
+  // Upload image to Firebase Storage
+  const uploadImage = async (file: File): Promise<string> => {
+    if (!storage || !database) {
+      throw new Error('Firebase not initialized')
+    }
+
+    // Compress the image first
+    const compressedBlob = await compressImage(file)
+    
+    // Create a unique filename
+    const filename = `chat-images/${Date.now()}_${Math.random().toString(36).substring(7)}.jpg`
+    const imageRef = storageRef(storage, filename)
+    
+    // Upload the compressed image
+    await uploadBytes(imageRef, compressedBlob)
+    
+    // Get the download URL
+    const downloadURL = await getDownloadURL(imageRef)
+    return downloadURL
+  }
+
+  // Handle image selection
+  const handleImageSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    // Check if it's an image
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file')
+      return
+    }
+
+    // Check file size (max 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Image is too large. Please select an image under 10MB')
+      return
+    }
+
+    setUploadingImage(true)
+
+    try {
+      // Upload image and get URL
+      const imageUrl = await uploadImage(file)
+      
+      // Send message with image
+      const newMessage = {
+        text: messageInput.trim() || '', // Optional caption
+        username: getUserName(),
+        timestamp: Date.now(),
+        imageUrl: imageUrl
+      }
+
+      const messagesRef = ref(database!, 'messages')
+      await push(messagesRef, newMessage)
+      console.log('Image message sent:', newMessage)
+      
+      setMessageInput('') // Clear caption
+    } catch (error) {
+      console.error('Error uploading image:', error)
+      alert('Error uploading image. Please try again.')
+    } finally {
+      setUploadingImage(false)
+      // Reset the file input
+      event.target.value = ''
+    }
+  }
+
   // Send message
   const sendMessage = async () => {
     if (!messageInput.trim()) return
@@ -1004,7 +1123,8 @@ function App() {
           text: msg.text,
           username: msg.username,
           timestamp: new Date(msg.timestamp),
-          isUser: msg.username === currentUser
+          isUser: msg.username === currentUser,
+          imageUrl: msg.imageUrl
         }))
         console.log('Messages list:', messagesList)
         console.log('Current user:', currentUser)
@@ -1324,7 +1444,15 @@ function App() {
                   <div key={msg.id} className={`message-wrapper ${msg.isUser ? 'user' : 'other'}`}>
                     {!msg.isUser && <div className="message-sender">{msg.username}</div>}
                     <div className={`message-bubble ${msg.isUser ? 'user' : 'other'}`}>
-                      {msg.text}
+                      {msg.imageUrl && (
+                        <img 
+                          src={msg.imageUrl} 
+                          alt="Shared image" 
+                          className="message-image"
+                          loading="lazy"
+                        />
+                      )}
+                      {msg.text && <div className="message-text">{msg.text}</div>}
                     </div>
                   </div>
                 ))}
@@ -1334,6 +1462,31 @@ function App() {
               {/* Message Input */}
               <div className="message-input-container">
                 <div className="input-wrapper">
+                  {/* Image Upload Button */}
+                  <label className="image-upload-button" title="Upload image">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageSelect}
+                      disabled={uploadingImage}
+                      style={{ display: 'none' }}
+                    />
+                    {uploadingImage ? (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10" opacity="0.25"/>
+                        <path d="M12 2 A10 10 0 0 1 22 12" strokeLinecap="round">
+                          <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/>
+                        </path>
+                      </svg>
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                      </svg>
+                    )}
+                  </label>
+                  
                   <input
                     type="text"
                     className="message-input"
@@ -1341,13 +1494,14 @@ function App() {
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
                     onKeyPress={(e) => {
-                      if (e.key === 'Enter') sendMessage()
+                      if (e.key === 'Enter' && !uploadingImage) sendMessage()
                     }}
+                    disabled={uploadingImage}
                   />
                   <button 
                     className="send-button" 
                     onClick={sendMessage}
-                    disabled={!messageInput.trim()}
+                    disabled={!messageInput.trim() || uploadingImage}
                   >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <path d="M2 12L22 2L16 22L11 13L2 12Z" fill="currentColor"/>

@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, Database } from "firebase/database";
+import { getStorage, FirebaseStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -14,13 +15,16 @@ const firebaseConfig = {
 
 // Initialize Firebase
 let database: Database | undefined;
+let storage: FirebaseStorage | undefined;
+
 try {
   const app = initializeApp(firebaseConfig);
   database = getDatabase(app);
+  storage = getStorage(app);
   console.log('Firebase initialized successfully');
 } catch (error) {
   console.error('Firebase initialization error:', error);
 }
 
-export { database };
+export { database, storage };
 

@@ -1081,6 +1081,9 @@ a.dock-app {
   line-height: 1.4;
   word-wrap: break-word;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .message-bubble.user {
@@ -1093,6 +1096,24 @@ a.dock-app {
   background: rgba(60, 60, 67, 0.6);
   color: #fff;
   border-bottom-left-radius: 4px;
+}
+
+.message-image {
+  max-width: 250px;
+  max-height: 350px;
+  border-radius: 12px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.message-image:hover {
+  transform: scale(1.02);
+}
+
+.message-text {
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 .message-input-container {
@@ -1121,6 +1142,43 @@ a.dock-app {
   visibility: visible !important;
   opacity: 1 !important;
   transform: translateZ(1002px) !important;
+}
+
+.image-upload-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease, transform 0.2s ease;
+  padding: 4px;
+  border-radius: 8px;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.image-upload-button:hover {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.image-upload-button:active {
+  transform: scale(0.95);
+}
+
+.image-upload-button input[disabled] {
+  cursor: not-allowed;
+}
+
+.image-upload-button:has(input[disabled]) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.image-upload-button:has(input[disabled]):hover {
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  transform: none;
 }
 
 .message-input {
