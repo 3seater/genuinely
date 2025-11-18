@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import { database } from './firebase'
 import { ref, push, onValue, query, orderByChild, limitToLast, get, update } from 'firebase/database'
+import Grain from './components/Grain'
 
 // Import local videos
 import video1 from './assets/videos/Download (11).mp4'
@@ -1138,7 +1139,7 @@ function App() {
   return (
     <div className="app-container">
       {/* Animated grain overlay for gradient banding fix */}
-      <div className="grain-overlay"></div>
+      <Grain opacity={0.03} blendMode="screen" />
       
       <div 
         className="iphone-frame"
