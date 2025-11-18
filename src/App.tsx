@@ -1442,7 +1442,7 @@ function App() {
               <div className="messages-list">
                 {messages.map((msg) => (
                   <div key={msg.id} className={`message-wrapper ${msg.isUser ? 'user' : 'other'}`}>
-                    {!msg.isUser && <div className="message-sender">{msg.username}</div>}
+                    <div className="message-sender">{msg.username}</div>
                     <div className={`message-bubble ${msg.isUser ? 'user' : 'other'}`}>
                       {msg.imageUrl && (
                         <img 
