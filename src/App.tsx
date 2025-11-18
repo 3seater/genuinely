@@ -1427,7 +1427,7 @@ function App() {
               {/* Messages Header */}
               <div className="imessage-header">
                 <button className="back-button" onClick={() => setShowMessages(false)}>
-                  <svg width="12" height="20" viewBox="0 0 12 20" fill="none">
+                  <svg width="14" height="22" viewBox="0 0 12 20" fill="none">
                     <path d="M10 2L2 10L10 18" stroke="#007AFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
