@@ -855,18 +855,20 @@ a.dock-app {
   }
   
   .dock {
-    padding: 0 12px;
-    gap: 12px;
+    padding: 0 8px;
+    gap: 6px;
+    justify-content: space-evenly; /* Ensure even spacing */
   }
   
   .dock-app {
-    width: 55px;
+    width: 48px;
+    flex-shrink: 0; /* Prevent shrinking */
   }
   
   .app-icon {
-    width: 55px;
-    height: 55px;
-    border-radius: 14px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
   }
   
   .side-actions {
@@ -894,20 +896,22 @@ a.dock-app {
   }
   
   .dock {
-    padding: 0 10px;
-    gap: 10px;
-    height: 80px !important;
+    padding: 0 6px;
+    gap: 4px;
+    height: 75px !important;
+    justify-content: space-evenly; /* Ensure even spacing */
   }
   
   .dock-app {
-    width: 50px;
+    width: 42px;
     gap: 2px;
+    flex-shrink: 0; /* Prevent shrinking */
   }
   
   .app-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 13px;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
   }
   
   .side-actions {
@@ -947,20 +951,22 @@ a.dock-app {
   }
   
   .dock {
-    padding: 0 8px;
-    gap: 8px;
-    height: 75px !important;
+    padding: 0 4px;
+    gap: 3px;
+    height: 70px !important;
+    justify-content: space-evenly; /* Ensure even spacing */
   }
   
   .dock-app {
-    width: 45px;
+    width: 38px;
     gap: 1px;
+    flex-shrink: 0; /* Prevent shrinking */
   }
   
   .app-icon {
-    width: 45px;
-    height: 45px;
-    border-radius: 12px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
   }
   
   .side-actions {
