@@ -659,7 +659,16 @@ function App() {
 
     // Touch handlers
     const touchStart = (e: TouchEvent) => {
-      e.preventDefault() // Prevent default for touch is ok
+      // Check if touch is on action buttons - if so, don't prevent default or start scrolling
+      const target = e.target as HTMLElement
+      const isActionButton = target.closest('.action-button') || target.closest('.side-actions')
+      
+      if (isActionButton) {
+        // Don't interfere with button clicks - let the onClick handler work
+        return
+      }
+      
+      e.preventDefault() // Only prevent default for video scrolling, not action buttons
       onStart(e.touches[0].clientY)
     }
     const touchMove = (e: TouchEvent) => {
