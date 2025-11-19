@@ -1429,8 +1429,8 @@ function App() {
                     className={`action-button bookmark-button ${bookmarkedVideos.has(video.id) ? 'bookmarked' : ''}`}
                     onClick={() => toggleBookmark(video.id)}
                   >
-                    <svg className="action-icon" viewBox="0 0 48 48" fill={bookmarkedVideos.has(video.id) ? '#FFD700' : 'white'}>
-                      <path d="M38 4H10v40l14-10 14 10V4z" stroke={bookmarkedVideos.has(video.id) ? '#FFD700' : 'white'} strokeWidth="2.5" fill={bookmarkedVideos.has(video.id) ? '#FFD700' : 'none'}/>
+                    <svg className="action-icon" viewBox="0 0 48 48" fill={bookmarkedVideos.has(video.id) ? '#fe2c55' : 'white'}>
+                      <path d="M38 4H10v40l14-10 14 10V4z"/>
                     </svg>
                     <span className="count">{formatCount(video.bookmarks)}</span>
                   </div>
